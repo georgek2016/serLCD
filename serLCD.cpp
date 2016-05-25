@@ -5,6 +5,8 @@
 
  Created by Cody B. Null, September 9, 2011
  Modified by Jordan Hochenbaum, Dec 5, 2011. (Version 1.5)
+ Modified by Johan Korten, March 23, 2013. (Version 1.6)
+
 
  Version 1.4 - This version wrote specifically for 16x2
                Display.
@@ -16,7 +18,10 @@
                 to use the Standard SoftwareSerial library. Also, Arduino 1.0
                 support has been added. Backwards compatible with previous versions.
 
- 
+ Version 1.6 - Added support for the setType special command.
+				This will help using different LCD's (2x16, 2x20, 4x16, 4x20).  
+		      Added support for scrollLeft and scrollRight commands.
+
  Note -	This library requires NewSoftSerial library
  The latest version of NewSoftSerial library can 
  always be found at http://arduiniana.org. -> NO LONGER NECESSARY. See V1.5 notes above
@@ -180,6 +185,28 @@ void serLCD::createChar(int location, uint8_t charmap[]){
 void serLCD::printCustomChar(int num){
 	write((num - 1));
 }
+
+// new in 1.6: sets the type of the LCD
+void serLCD::setType(int num){
+/*
+  3: type 2x16
+  4: type 2x20
+  5: type 4x16
+  6: type 4x20
+*/
+	specialCommand(num);
+}
+
+// new in 1.6: scrolls text to left with one position
+void serLCD::scrollLeft(){
+  command(0x18);
+}
+
+// new in 1.6: scrolls text to right with one position
+void serLCD::scrollRight(){
+	command(0x1C);
+}
+
 
 // PRIVATE FUNCTIONS
 

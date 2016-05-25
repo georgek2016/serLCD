@@ -4,16 +4,22 @@
 
  Created by Cody B. Null, September 9, 2011
  Modified by Jordan Hochenbaum, Dec 5, 2011. (Version 1.5)
+ Modified by Johan Korten, March 23, 2013. (Version 1.6)
+
 
  Version 1.4 - This version wrote specifically for 16x2
                Display.
                More display support coming in later version.
- 
+
  Version 1.5 - Since mid 2011 the Arduino IDE has implemented the NewSoftSerial 
                library updates in the standard SoftwareSerial library and so 
                using NewSoftSerial is no longer needed. serLCD has been updated 
                to use the Standard SoftwareSerial library. Also, Arduino 1.0
                support has been added. Backwards compatible with previous versions.
+
+ Version 1.6 - Added support for the setType special command.
+				This will help using different LCD's (2x16, 2x20, 4x16, 4x20).  
+		      Added support for scrollLeft and scrollRight commands.
 
  Note -	This library requires NewSoftSerial library
         The latest version of NewSoftSerial library can 
@@ -74,6 +80,9 @@ public:
 	void setBrightness(int);
 
 	void setSplash();
+	void setType(int);  // new in 1.6
+	void scrollLeft();  // new in 1.6
+	void scrollRight(); // new in 1.6
 	void toggleSplash();
 
 	void blink();
