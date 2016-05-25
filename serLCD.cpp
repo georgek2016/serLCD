@@ -160,11 +160,11 @@ void serLCD::noDisplay(){
 
 // Set cursor to specific row and col values start at 1 not 0
 void serLCD::setCursor(int row, int col){
-	int row_offsets[2][4] = {
+	int row_offsets[2][4] = {	
 		{ 0x00, 0x40, 0x10, 0x50 },
 		{ 0x00, 0x40, 0x14, 0x54 }
 	};
-	if((row > 0 && row < 3) && (col > 0 && col < 17)){
+	if((row > 0 && row <= _numlines ) && (col > 0 && col <= _numchars )){
            command(LCD_SETDDRAMADDR | ((col - 1) + row_offsets[_rowoffset][(row - 1)]));
 	}
 }
@@ -195,6 +195,28 @@ void serLCD::setType(int num){
   6: type 4x20
 */
 	specialCommand(num);
+	switch ( num ) {
+		case 3: {
+			_numlines = LCD_2LINE;
+			_numchars = LCD_16CHAR;
+			_rowoffset = 0;
+		}
+		case 4: {
+			_numlines = LCD_2LINE;
+			_numchars = LCD_20CHAR;
+			_rowoffset = 0;
+		}
+		case 5: {
+			_numlines = LCD_4LINE;
+			_numchars = LCD_16CHAR;
+			_rowoffset = 1;
+		}
+		case 6: {
+			_numlines = LCD_4LINE;
+			_numchars = LCD_20CHAR;
+			_rowoffset = 1;
+		}
+	}
 }
 
 // new in 1.6: scrolls text to left with one position
@@ -221,3 +243,4 @@ void serLCD::specialCommand(uint8_t value){
 	write(value);
 	delay(5);
 }
+
